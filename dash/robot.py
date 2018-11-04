@@ -1,3 +1,10 @@
+"""
+NOTICE:
+Adapted from original source code Copyright 2016 Ilya Sukhanov
+distributed under Apache 2.0 license
+https://github.com/IlyaSukhanov/morseapi
+"""
+
 from __future__ import division
 
 from dash.constants import HANDLES, COMMANDS, NOISES
