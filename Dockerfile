@@ -12,4 +12,6 @@ WORKDIR /home/dash
 
 RUN pip install -r requirements.txt && \
     rm requirements.txt && \
-    rm Dockerfile
+    rm Dockerfile && \
+    rm .gitattributes && \
+    rm .gitignore
