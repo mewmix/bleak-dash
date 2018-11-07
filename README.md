@@ -1,13 +1,9 @@
 # python-dash-robot
 
-An unofficial (and unsanctioned) python library for controlling
-[Wonder Workshop's](https://www.makewonder.com/)
-[Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
+An unofficial (and unsanctioned) python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
 
 ## NOTICE:
-Adapted from original source code Copyright 2016 Ilya Sukhanov
-distributed under Apache 2.0 license
-https://github.com/IlyaSukhanov/morseapi
+Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi
 
 Key differences:
 - Adapted to support Python 3.x
