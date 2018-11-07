@@ -5,9 +5,7 @@ An unofficial (and unsanctioned) python library for controlling
 [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
 
 ## NOTICE:
-Adapted from original source code Copyright 2016 Ilya Sukhanov
-distributed under Apache 2.0 license
-https://github.com/IlyaSukhanov/morseapi
+Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi
 
 Key differences:
 - Adapted to support Python 3.x
@@ -34,7 +32,7 @@ Import library:
 ```
 Create an instance of the robot and play:
 ```Python
->>> dash = robot.robot(robot.get_dash())
+>>> dash = robot.get_dash()
 Found Dash at: XX:XX:XX:XX:XX:XX
 Connecting to: XX:XX:XX:XX:XX:XX
 Connecting to: <pygatt.backends.gatttool.device.GATTToolBLEDevice object at ... >

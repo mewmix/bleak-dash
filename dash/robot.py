@@ -66,7 +66,7 @@ def angle_array(angle):
 
 class robot:
     def __init__(self, device):
-        print('Connecting to:', device)
+        print('Returning robot:', device)
         self.device = device
         #print("Connecting to robot Characteristics.")
         #device.discover_characteristics([ROBOT_SERVICE_UUID], [COMMAND1_CHAR_UUID, COMMAND2_CHAR_UUID,  SENSOR1_CHAR_UUID, SENSOR2_CHAR_UUID, INFO_CHAR_UUID])
@@ -381,7 +381,8 @@ def get_dash():
 
     if address != '':
         print('Connecting to:', address)
-        dash = adapter.connect(address, address_type=pygatt.BLEAddressType.random)
+        x = adapter.connect(address, address_type=pygatt.BLEAddressType.random)
+        dash = robot(x)
     else:
         print('Dash not found!')
         dash = None
