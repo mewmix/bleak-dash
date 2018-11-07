@@ -1,8 +1,6 @@
 # python-dash-robot
 
-An unofficial (and unsanctioned) python library for controlling
-[Wonder Workshop's](https://www.makewonder.com/)
-[Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
+An unofficial (and unsanctioned) python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
 
 ## NOTICE:
 Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi
