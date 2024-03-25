@@ -1,39 +1,25 @@
-# python-dash-robot
+# bleak-dash
 
-An unofficial (and unsanctioned) python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
+An unofficial bleak powered cross platform python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
 
 ## NOTICE:
-Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi
+Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi & updated code Copyright 2018 Russ Buchanan https://github.com/havnfun/python-dash-robot
 
 Key differences:
-- Adapted to support Python 3.x
-- Removed references to GenericRobot
-- Added function to get Dash by device name
-- Dockerfile
+- Changed backend from pygatt to bleak
+- Compatible with Python 3.11 
+- Cross Platform
+- Asynchronous 
 - Sensors are not yet supported
 - Dot is not supported
 
 ## Motivation
-The motivation for this work was primarily to provide a platform to explore Python coding with my kids.  The opportunity to experiment with Bluetooth LE was also a factor.
+I wanted to use my kids dash robot from my Mac or my Windows machine without reinventing the wheel.
 
 ## Compatibility
-Docker container and source code work when deployed under Ubuntu 18.04.  Not tested on other platforms.
-
+Using Bleak we should be Windows / Mac / Linux agnostic. Please let me know if any issues. Tested on M1 & Windows 
 ## Getting Started
-Running docker container on host network will launch CPython interpreter:
 ```
-docker run -it --net=host --name=dash havnfun/python-dash-robot
+git clone https://github.com/mewmix/bleak-dash
 ```
-Import library:
-```Python
->>> from dash import robot
-```
-Create an instance of the robot and play:
-```Python
->>> dash = robot.get_dash()
-Found Dash at: XX:XX:XX:XX:XX:XX
-Connecting to: XX:XX:XX:XX:XX:XX
-Connecting to: <pygatt.backends.gatttool.device.GATTToolBLEDevice object at ... >
->>> dash.say('hi')
-```
-(Note that additional warnings are displayed when running in Docker.)
+

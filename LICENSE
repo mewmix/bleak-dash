@@ -1,8 +1,12 @@
 NOTICE:
-Adapted from source code by Ilya Sukhanov
+Adapted from source code by Ilya Sukhanov & Russ Buchanan 
 https://github.com/IlyaSukhanov/morseapi
 
 Copyright 2016 Ilya Sukhanov
+
+https://github.com/havnfun/python-dash-robot
+
+Copyright 2018 Russ Buchanan 
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
