@@ -1,3 +1,2 @@
-pexpect
-pygatt
-colour
+bleak==0.21.1
+colour==0.1.5

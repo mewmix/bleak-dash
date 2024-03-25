@@ -1,5 +1,5 @@
 import asyncio
-from dash.macbot import Robot, discover_and_connect
+from dash.robot import Robot, discover_and_connect
 from dash.constants import COMMANDS
 
 async def test_all_commands():
