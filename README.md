@@ -1,6 +1,6 @@
 # bleak-dash
 
-An unofficial bleak powered cross platform python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
+An unofficial [bleak](https://github.com/hbldh/bleak) powered cross platform python library for controlling [Wonder Workshop's](https://www.makewonder.com/) [Dash](https://www.makewonder.com/?gclid=CPOO8bC8k8oCFdaRHwodPeMIZg) robot.
 
 ## NOTICE:
 Adapted from original source code Copyright 2016 Ilya Sukhanov https://github.com/IlyaSukhanov/morseapi & updated code Copyright 2018 Russ Buchanan https://github.com/havnfun/python-dash-robot
