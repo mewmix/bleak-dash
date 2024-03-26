@@ -23,3 +23,9 @@ cd bleak-dash
 pip install -e . 
 ```
 
+## Tests
+
+```
+python tests/lightshow_random.py  
+```
+
