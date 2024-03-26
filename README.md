@@ -33,7 +33,7 @@ python tests/lightshow_random.py
 
 ```python
 import asyncio
-from bleak_dash import DashRobot, discover_and_connect
+from dash.robot import DashRobot, discover_and_connect
 
 async def main():
     robot = await discover_and_connect()
