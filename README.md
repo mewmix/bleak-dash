@@ -10,8 +10,6 @@ Key differences:
 - Compatible with Python 3.11 
 - Cross Platform
 - Asynchronous 
-- Sensors are not yet supported
-- Dot is not supported
 
 ## Motivation
 I wanted to use my kids dash robot from my Mac or my Windows machine without reinventing the wheel.
@@ -21,5 +19,7 @@ Using Bleak we should be Windows / Mac / Linux agnostic. Please let me know if a
 ## Getting Started
 ```
 git clone https://github.com/mewmix/bleak-dash
+cd bleak-dash
+pip install -e . 
 ```
 

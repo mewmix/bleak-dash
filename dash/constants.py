@@ -1,7 +1,7 @@
 import binascii
 from uuid import UUID
 
-# these aren't currently used
+##command 1 is used. sensors to be implemented
 ROBOT_SERVICE_UUID = UUID('AF237777-879D-6186-1F49-DECA0E85D9C1')
 COMMAND1_CHAR_UUID = UUID('AF230002-879D-6186-1F49-DECA0E85D9C1')
 SENSOR1_CHAR_UUID = UUID('AF230006-879D-6186-1F49-DECA0E85D9C1')
