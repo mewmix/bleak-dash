@@ -6,8 +6,12 @@ import logging
 import math
 import time
 from dash.constants import COMMANDS, NOISES, COMMAND1_CHAR_UUID
+from dash.sensors import RobotSensors
 import struct
 from colour import Color
+from collections import defaultdict
+
+
 
 # Reused the utility functions as they are compatible
 def one_byte_array(value):
@@ -34,11 +38,16 @@ class Robot:
     def __init__(self, address):
         self.address = address
         self.client = None
+        self.sense = None
+        self.sensor_state = defaultdict(int)
 
     async def connect(self):
         self.client = BleakClient(self.address)
         await self.client.connect()
         print(f'Connected to {self.address}')
+
+        self.sense = RobotSensors(self.client, self.sensor_state)
+        await self.sense.start()
 
     
     async def disconnect(self):
@@ -94,6 +103,85 @@ class Robot:
             await self.command("say", bytearray(NOISES[sound_name]))
         else:
             print(f"Sound '{sound_name}' not found in sound bank.")
+
+
+    # ---------------------GETTERS--------------------------
+
+    def get_time(self) -> float:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["dot_time"]
+
+    def get_index(self) -> int:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["dot_index"]
+        
+    def get_pitch(self) -> int:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["pitch"]
+        
+    def get_roll(self) -> int:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["roll"]
+        
+    def get_acceleration(self) -> int:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["acceleration"]
+        
+    def is_white_button_pressed(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["button0"]
+        
+    def is_button_1_pressed(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["button1"]
+        
+    def is_button_2_pressed(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["button2"]
+        
+    def is_button_3_pressed(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["button3"]
+        
+    def is_moving(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["moving"]
+        
+    def is_picked_up(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["picked_up"]
+        
+    def is_hit(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["hit"]
+        
+    def is_on_side(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["side"]
+        
+    def is_nominal(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["nominal"]
+        
+    def has_heard_clap(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["clap"]
+        
+    def get_mic_level(self) -> int:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["mic_level"]
+        
+    def is_dot_left_of_dash(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["dot_left_of_dash"]
+        
+    def is_dot_right_of_dash(self) -> bool:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["dot_right_of_dash"]
+        
+    def get_robot(self) -> str:
+        if self.sense.dot_data_stream_ready:
+            return self.sensor_state["robot"]
 
 
 class DashRobot(Robot):
@@ -218,6 +306,70 @@ class DashRobot(Robot):
             distance_low_byte, 0x00, turn_low_byte,
             time_high_byte, time_low_byte, sixth_byte, seventh_byte, eight_byte
         ])
+    
+    # ---------------------GETTERS--------------------------
+
+    def get_dash_time(self) -> float:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["dash_time"]
+        
+    def get_dash_index(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["dash_index"]
+        
+    def get_pitch_delta(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["pitch_delta"]
+        
+    def get_roll_delta(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["roll_delta"]
+        
+    def get_prox_right(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["prox_right"]
+        
+    def get_prox_left(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["prox_left"]
+        
+    def get_prox_rear(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["prox_rear"]
+        
+    def get_yaw(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["yaw"]
+        
+    def get_yaw_delta(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["yaw_delta"]
+        
+    def get_left_wheel(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["left_wheel"]
+        
+    def get_right_wheel(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["right_wheel"]
+        
+    def get_head_pitch(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["head_pitch"]
+        
+    def get_head_yaw(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["head_yaw"]
+        
+    def get_wheel_distance(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["wheel_distance"]
+        
+    def get_sound_direction(self) -> int:
+        if self.sense.dash_data_stream_ready:
+            return self.sensor_state["sound_direction"]
+        
+    
 
 
 async def discover_and_connect(retry_attempts=3, retry_delay=5):
