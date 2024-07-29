@@ -1,10 +1,12 @@
 import logging
 import time
+import asyncio
 from bleak import BleakClient
 from collections import defaultdict
-import asyncio
+
 
 from dash.constants import CHARACTERISTICS
+
 
 def _to_int(value, bits):
     if value > ((1<<(bits-1))-1):
