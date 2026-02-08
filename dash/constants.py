@@ -26,6 +26,7 @@ COMMANDS = {
     "head_color":0x0d,
     "head_pitch":0x07,
     "head_yaw":0x06,
+    "pose":0x23,
     "say":0x18,
     "beep":0x19,
     "drive":0x02,
