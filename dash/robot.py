@@ -10,7 +10,23 @@ from dash.sensors import RobotSensors
 import struct
 from colour import Color
 from collections import defaultdict
+from enum import IntEnum
 
+
+class PoseMode(IntEnum):
+    """Pose interpretation modes"""
+    GLOBAL = 0              # Relative to global coordinate system
+    RELATIVE_COMMAND = 1    # Relative to where robot should be
+    RELATIVE_MEASURED = 2   # Relative to current measured position
+    SET_GLOBAL = 3          # Reset global coordinate to this pose
+    # Mode 5 is converted to SET_GLOBAL (3) during serialization
+
+
+class PoseDirection(IntEnum):
+    """Movement direction"""
+    FORWARD = 0
+    BACKWARD = 1
+    INFERRED = 2
 
 
 # Reused the utility functions as they are compatible
@@ -262,6 +278,56 @@ class DashRobot(Robot):
         await self.command("head_pitch", angle_array(angle))
     
 
+    async def pose(self,
+                   # in cm
+                   x: float = 0.0,
+                   # in cm
+                   y: float = 0.0,
+                   # in radians
+                   theta: float = 0.0,
+                   # How long movement should take in seconds
+                   time: float = 0.0,
+                   mode: PoseMode = PoseMode.RELATIVE_MEASURED,
+                   direction: PoseDirection = PoseDirection.INFERRED,
+                   wrap_theta: bool = True,
+                   ease: bool = True):
+        """
+        Command robot to alter its pose
+  
+        Encoding format:
+        - X, Y: 14-bit signed integers (scaled by 10)
+        - Theta: 12-bit signed integer (scaled by 100)
+        - Time: 16-bit unsigned integer (milliseconds)
+        - Mode, direction, wrap_theta, ease: packed control flags
+        """
+        # Scale and round values
+        x_encoded = max(-8192, min(8191, int(round(x * 10.0))))
+        y_encoded = max(-8192, min(8191, int(round(y * 10.0))))
+        
+        theta_scaled = theta * 100.0
+        theta_encoded = max(-2048, min(2047, int(round(theta_scaled))))
+        
+        time_ms = max(0, min(65535, int(round(time * 1000.0))))
+        
+        # Handle mode 5 -> 3 conversion
+        mode = 3 if mode == 5 else (int(mode) & 0x03)
+        
+        # Pack into bytes
+        data = struct.pack(
+            'BBBBBBBB',
+            x_encoded & 0xFF,                               # Byte 1: X low byte
+            y_encoded & 0xFF,                               # Byte 2: Y low byte
+            theta_encoded & 0xFF,                           # Byte 3: Theta low byte
+            (time_ms >> 8) & 0xFF,                         # Byte 4: Time high byte
+            time_ms & 0xFF,                                 # Byte 5: Time low byte
+            ((x_encoded >> 8) & 0x3F) | ((theta_encoded >> 2) & 0xC0),  # Byte 6
+            ((y_encoded >> 8) & 0x3F) | ((theta_encoded >> 4) & 0xC0),  # Byte 7
+            (mode << 6) | ((int(ease) & 0x01) << 5) | 
+            ((int(wrap_theta) & 0x01) << 4) | (int(direction) & 0x0F)  # Byte 8
+        )
+        
+        await self.command("pose", data)
+
     async def drive(self, speed):
         """
         Start moving Dash forward or backward.
@@ -482,7 +548,7 @@ async def discover_and_connect(retry_attempts=3, retry_delay=5):
         try:
             devices = await BleakScanner.discover()
             for device in devices:
-                if device.name == "Dash":
+                if device.name in {"Dash", "Dashet"}:
                     logging.info(f"Found Dash at: {device.address}")
                     dash_robot = DashRobot(device.address)
                     await dash_robot.connect()
